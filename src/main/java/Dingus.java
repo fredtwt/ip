@@ -29,7 +29,7 @@ public class Dingus {
 				String output = startLine + "\nHere are the tasks in your list:";
 				for (int i = 0; i < tasks.size(); i++) {
 					int numbering = i + 1;
-					output += "\n" + numbering + ". [" + tasks.get(i).getStatusIcon() + "] " + tasks.get(i);
+					output += "\n" + numbering + ". " + tasks.get(i);
 				}
 				output += "\n" + endLine;
 				System.out.println(output);
@@ -37,21 +37,37 @@ public class Dingus {
 				// Marking task as Done
 				int pos = Integer.parseInt(words[1]) - 1;
 				tasks.get(pos).mark();
-				System.out.println(startLine + "\nHooray...you've finally completed this task:\n" + "["
-						+ tasks.get(pos).getStatusIcon() + "] " + tasks.get(pos) + "\n" + endLine);
+				System.out
+						.println(startLine + "\nHooray...you've finally completed this task:\n" + tasks.get(pos) + "\n" + endLine);
 			} else if (words[0].equals("unmark")) {
 				// Unmarking task
 				int pos = Integer.parseInt(words[1]) - 1;
 				tasks.get(pos).unmark();
 				System.out
-						.println(startLine + "\nFaking your completed tasks again? I've unmarked this task:\n"
-								+ "[" + tasks.get(pos).getStatusIcon() + "] " + tasks.get(pos) + "\n" + endLine);
+						.println(startLine + "\nFaking your completed tasks again? I've unmarked this task:\n" + tasks.get(pos)
+								+ "\n" + endLine);
 
-			} else {
-				// Adding Tasks
-				Task currTask = new Task(input);
+			} else if (words[0].equals("todo")) {
+				// Adding Todo
+				Task currTask = new Todo(input.substring(5));
 				tasks.add(currTask);
-				System.out.println(startLine + "\nadded:	" + currTask + "\n" + endLine);
+				System.out.println(startLine + "\nStop troubling me, I've already added this task:\n" + currTask
+						+ "\nCan you even finish " + tasks.size() + " tasks?\n" + endLine);
+			} else if (words[0].equals("deadline")) {
+				// Adding Deadline
+				String[] deadline = input.split("/");
+				Task currTask = new Deadline(deadline[0].substring(9), deadline[1]);
+				tasks.add(currTask);
+				System.out.println(startLine + "\nStop troubling me, I've already added this task:\n" + currTask
+						+ "\nCan you even finish " + tasks.size() + " tasks?\n" + endLine);
+			} else if (words[0].equals("event")) {
+				// Adding Event
+				String[] event = input.split("/");
+				Task currTask = new Event(event[0].substring(6), event[1]);
+				tasks.add(currTask);
+				System.out.println(startLine + "\nStop troubling me, I've already added this task:\n" + currTask
+						+ "\nCan you even finish " + tasks.size() + " tasks?\n" + endLine);
+
 			}
 		}
 
